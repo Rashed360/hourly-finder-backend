@@ -1,1 +1,1 @@
-# Hourly-Finder-backend using Django REST API
+# Hourly Finder Backend using Django REST API

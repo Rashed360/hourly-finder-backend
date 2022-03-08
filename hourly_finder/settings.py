@@ -107,6 +107,12 @@ DJOSER = {
     }
 }
 
+# Simple JWT Settings
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+}
+
 # Authentication Model
 AUTH_USER_MODEL = 'app_auth.User'
 

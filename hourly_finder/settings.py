@@ -98,6 +98,15 @@ REST_FRAMEWORK = {
     ),
 }
 
+# Djoser Settings
+DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'SERIALIZERS': {
+        'user_create': 'app_auth.serializers.UserCreateSerializer',
+        'user': 'app_auth.serializers.UserCreateSerializer',
+    }
+}
+
 # Authentication Model
 AUTH_USER_MODEL = 'app_auth.User'
 

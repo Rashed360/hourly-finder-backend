@@ -1,4 +1,5 @@
 from django.db import models
+from app_user.models import RecruiterProfile
 
 
 class JobType(models.Model):
@@ -29,7 +30,7 @@ class Company(models.Model):
 
 class Job(models.Model):
     company = models.ForeignKey(Company,on_delete=models.CASCADE,related_name='company')
-    recruiter = models.ForeignKey(RecruterProfile,on_delete=models.CASCADE,related_name='recruiter')
+    recruiter = models.ForeignKey(RecruiterProfile,on_delete=models.CASCADE,related_name='recruiter')
 
     title = models.CharField(max_length=150, verbose_name='Job Title')
     image = models.ImageField(upload_to='jobs', verbose_name='Job Banner')

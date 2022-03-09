@@ -2,6 +2,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from .models import SeekerProfile,RecruiterProfile
 from .serializers import SeekerProfileSerializer,RecruiterProfileSerializer
+from django.shortcuts import redirect
 
 
 class SeekerProfileViewSet(ModelViewSet):
@@ -25,3 +26,11 @@ class RecruiterProfileViewSet(ModelViewSet):
         if id is not None:
             queryset = queryset.filter(user__id=id)
         return queryset
+
+
+# Redirect Views
+def activate(request,uid,token):
+    return redirect(f"http://127.0.0.1:3000/activate?uid={uid}?token={token}")
+
+def password_reset(request,uid,token):
+    return redirect(f"http://127.0.0.1:3000/password-reset?uid={uid}?token={token}")

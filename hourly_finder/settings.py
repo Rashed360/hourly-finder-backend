@@ -102,6 +102,10 @@ REST_FRAMEWORK = {
 # Djoser Settings
 DJOSER = {
     'LOGIN_FIELD': 'email',
+    'SEND_ACTIVATION_EMAIL': True,
+    'ACTIVATION_URL': '/user/activate/{uid}/{token}',
+    'SEND_CONFIRMATION_EMAIL': True,
+    'PASSWORD_RESET_CONFIRM_URL': '/user/password-reset/{uid}/{token}',
     'SERIALIZERS': {
         'user_create': 'app_auth.serializers.UserCreateSerializer',
         'user': 'app_auth.serializers.UserCreateSerializer',
@@ -117,6 +121,13 @@ SIMPLE_JWT = {
 # Authentication Model
 AUTH_USER_MODEL = 'app_auth.User'
 
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'info.hourlyfinder@gmail.com'
+EMAIL_HOST_PASSWORD = 'kvpssyefiomgnncr'
+EMAIL_USE_TLS = True
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'

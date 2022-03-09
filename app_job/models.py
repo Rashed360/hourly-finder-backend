@@ -48,8 +48,8 @@ class Job(models.Model):
 
     overview = models.TextField(blank=True,verbose_name='Job Overview')
     todo = models.TextField(blank=True,verbose_name='Job Responsibilities')
-    skill = models.ForeignKey(JobSkill,on_delete=models.CASCADE,related_name='skills')
-    keyword = models.ForeignKey(JobKeyword,on_delete=models.CASCADE,related_name='keywords')
+    skill = models.CharField(max_length=100, verbose_name='Job Title')
+    keyword = models.CharField(max_length=100, verbose_name='Job Title')
     
     class Meta:
         ordering = ['-created',]

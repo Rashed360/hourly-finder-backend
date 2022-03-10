@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'djoser',
     'app_auth',
     'app_user',
+    'app_job',
 ]
 
 MIDDLEWARE = [

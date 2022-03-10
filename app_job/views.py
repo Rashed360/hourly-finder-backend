@@ -1,15 +1,37 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
-from .models import Order
-from .serializers import OrderSerializer
+from .models import Job,JobType,Company
+from .serializers import JobSerializer,JobTypeSerializer,CompanySerializer
 
 
-class OrderViewSet(ModelViewSet):
-    # permission_classes = [IsAuthenticated, ]
-    serializer_class = OrderSerializer
+class JobViewSet(ModelViewSet):
+    permission_classes = []
+    serializer_class = JobSerializer
 
     def get_queryset(self):
-        queryset = Order.objects.all()
+        queryset = Job.objects.all()
+        id = self.request.query_params.get('id',None)
+        if id is not None:
+            queryset = queryset.filter(user__id=id)
+        return queryset
+
+class JobTypeViewSet(ModelViewSet):
+    permission_classes = []
+    serializer_class = JobTypeSerializer
+
+    def get_queryset(self):
+        queryset = JobType.objects.all()
+        id = self.request.query_params.get('id',None)
+        if id is not None:
+            queryset = queryset.filter(user__id=id)
+        return queryset
+
+class CompanyViewSet(ModelViewSet):
+    permission_classes = []
+    serializer_class = CompanySerializer
+
+    def get_queryset(self):
+        queryset = Company.objects.all()
         id = self.request.query_params.get('id',None)
         if id is not None:
             queryset = queryset.filter(user__id=id)

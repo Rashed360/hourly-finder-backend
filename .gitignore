@@ -1,3 +1,4 @@
+.env
 hourly_finder_venv
 db.sqlite3
 __pycache__

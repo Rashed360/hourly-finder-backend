@@ -1,12 +1,13 @@
 from pathlib import Path
 from datetime import timedelta
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_DIR = BASE_DIR.joinpath('media')
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-g%mu*1&@mk4%9jvpao8uf#x$gmi*82*$rn5pm&uq#tk&tl7fo='
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -104,9 +105,9 @@ REST_FRAMEWORK = {
 DJOSER = {
     'LOGIN_FIELD': 'email',
     'SEND_ACTIVATION_EMAIL': True,
-    'ACTIVATION_URL': '/user/activate/{uid}/{token}',
+    'ACTIVATION_URL': 'user/activate/{uid}/{token}',
     'SEND_CONFIRMATION_EMAIL': True,
-    'PASSWORD_RESET_CONFIRM_URL': '/user/password-reset/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'user/password-reset/{uid}/{token}',
     'SERIALIZERS': {
         'user_create': 'app_auth.serializers.UserCreateSerializer',
         'user': 'app_auth.serializers.UserCreateSerializer',
@@ -126,8 +127,8 @@ AUTH_USER_MODEL = 'app_auth.User'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'info.hourlyfinder@gmail.com'
-EMAIL_HOST_PASSWORD = 'kvpssyefiomgnncr'
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 
 # Internationalization

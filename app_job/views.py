@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
-from .models import Job,JobType,Company
-from .serializers import JobSerializer,JobTypeSerializer,CompanySerializer
+from .models import Job,JobType,Company,Application
+from .serializers import JobSerializer,JobTypeSerializer,CompanySerializer,ApplicationSerializer
 
 
 class JobViewSet(ModelViewSet):
@@ -35,4 +35,15 @@ class CompanyViewSet(ModelViewSet):
         id = self.request.query_params.get('id',None)
         if id is not None:
             queryset = queryset.filter(user__id=id)
+        return queryset
+
+class ApplicationViewSet(ModelViewSet):
+    permission_classes = []
+    serializer_class = ApplicationSerializer
+
+    def get_queryset(self):
+        queryset = Application.objects.all()
+        id = self.request.query_params.get('id',None)
+        if id is not None:
+            queryset = queryset.filter(job_id=id)
         return queryset

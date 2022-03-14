@@ -1,5 +1,5 @@
 from django.db import models
-from app_user.models import RecruiterProfile
+from app_user.models import RecruiterProfile,SeekerProfile
 
 
 class JobType(models.Model):
@@ -13,7 +13,7 @@ class Company(models.Model):
     name = models.CharField(max_length=100, verbose_name='Company Name')
     moto = models.CharField(max_length=200, verbose_name='Company Moto')
     description = models.TextField(blank=True,verbose_name='Description')
-    logo = models.ImageField(upload_to='jobs', verbose_name='Company Logo')
+    logo = models.ImageField(upload_to='jobs', blank=True, verbose_name='Company Logo')
     location = models.CharField(max_length=50, verbose_name='Company Location')
     def __str__(self):
         return self.name +', '+ self.location
@@ -24,7 +24,7 @@ class Job(models.Model):
     recruiter = models.ForeignKey(RecruiterProfile,on_delete=models.CASCADE,related_name='recruiter')
 
     title = models.CharField(max_length=150, verbose_name='Job Title')
-    image = models.ImageField(upload_to='jobs', verbose_name='Job Banner')
+    image = models.ImageField(upload_to='jobs',blank=True, verbose_name='Job Banner')
 
     salary = models.CharField(max_length=10, verbose_name='Salary')
     type = models.ForeignKey(JobType,on_delete=models.CASCADE,related_name='type')
@@ -48,3 +48,18 @@ class Job(models.Model):
     
     def __str__(self):
         return self.title
+
+
+class Application(models.Model):
+    job = models.ForeignKey(Job,on_delete=models.CASCADE,related_name='job')
+    seeker = models.ForeignKey(SeekerProfile,on_delete=models.CASCADE,related_name='seeker')
+    message = models.TextField(blank=True,verbose_name='message')
+    applied = models.DateTimeField(auto_now_add=True)
+
+    STATUS = ((1,'Pending'),(2,'Rejected'),(3,'Short-listed'),(4,'Hired'))
+    status = models.PositiveSmallIntegerField(choices=STATUS,default=1,verbose_name='status')    
+    
+    class Meta:
+        ordering = ['-applied',]    
+    def __str__(self):
+        return self.seeker.user.first_name

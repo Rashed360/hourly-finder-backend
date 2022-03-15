@@ -1,12 +1,16 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import BasicAuthentication
+from rest_framework.pagination import PageNumberPagination
 from .models import Job,JobType,Company,Application
 from .serializers import JobSerializer,JobTypeSerializer,CompanySerializer,ApplicationSerializer
 
 
 class JobViewSet(ModelViewSet):
-    permission_classes = []
     serializer_class = JobSerializer
+    authentication_classes = []
+    permission_classes = []
+    pagination_class = PageNumberPagination
 
     def get_queryset(self):
         queryset = Job.objects.all()

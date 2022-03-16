@@ -6,14 +6,14 @@ from django.shortcuts import redirect
 
 
 class SeekerProfileViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [ ]
     serializer_class = SeekerProfileSerializer
 
     def get_queryset(self):
         queryset = SeekerProfile.objects.all()
         id = self.request.query_params.get('id',None)
         if id is not None:
-            queryset = queryset.filter(user__id=id)
+            queryset = queryset.filter(user=id)
         return queryset
 
 class RecruiterProfileViewSet(ModelViewSet):
@@ -24,7 +24,7 @@ class RecruiterProfileViewSet(ModelViewSet):
         queryset = RecruiterProfile.objects.all()
         id = self.request.query_params.get('id',None)
         if id is not None:
-            queryset = queryset.filter(user__id=id)
+            queryset = queryset.filter(user=id)
         return queryset
 
 

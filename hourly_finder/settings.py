@@ -4,6 +4,7 @@ from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+STATIC_DIR = BASE_DIR.joinpath('static')
 MEDIA_DIR = BASE_DIR.joinpath('media')
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -111,14 +112,15 @@ DJOSER = {
     'SEND_CONFIRMATION_EMAIL': True,
     'PASSWORD_RESET_CONFIRM_URL': 'user/password-reset/{uid}/{token}',
     'SERIALIZERS': {
-        'user_create': 'app_auth.serializers.UserCreateSerializer',
         'user': 'app_auth.serializers.UserCreateSerializer',
+        'current_user': 'app_auth.serializers.UserCreateSerializer',
+        'user_create': 'app_auth.serializers.UserCreateSerializer',
     }
 }
 
 # Simple JWT Settings
 SIMPLE_JWT = {
-   'AUTH_HEADER_TYPES': ('JWT',),
+    'AUTH_HEADER_TYPES': ('JWT',),
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
 }
 
@@ -144,7 +146,8 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript)
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [STATIC_DIR,]
 
 # Media files (Images)
 MEDIA_ROOT = MEDIA_DIR

@@ -14,7 +14,7 @@ class UserCreateSerializer(UserCreateSerializer):
         }
     
     def create(self, validated_data):
-        user_type = validated_data.pop('user_type')
+        user_type = validated_data['user_type']
         user = User.objects.create_user(**validated_data)
         if user_type==1:
             SeekerProfile.objects.create(user=user)

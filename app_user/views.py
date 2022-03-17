@@ -30,7 +30,7 @@ class RecruiterProfileViewSet(ModelViewSet):
 
 # Redirect Views
 def activate(request,uid,token):
-    return redirect(f"http://127.0.0.1:3000/activate?uid={uid}?token={token}")
+    return redirect(f"http://127.0.0.1:3000/activate/{uid}/{token}")
 
 def password_reset(request,uid,token):
-    return redirect(f"http://127.0.0.1:3000/password-reset?uid={uid}?token={token}")
+    return redirect(f"http://127.0.0.1:3000/password-reset/{uid}/{token}")

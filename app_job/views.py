@@ -5,18 +5,22 @@ from rest_framework.pagination import PageNumberPagination
 from .models import Job,JobType,Company,Application
 from .serializers import JobSerializer,JobTypeSerializer,CompanySerializer,ApplicationSerializer
 
+class CustomPageNumberPagination(PageNumberPagination):
+    page_size = 2
+    page_size_query_param = 'page_size'
+    max_page_size = 10
 
 class JobViewSet(ModelViewSet):
     serializer_class = JobSerializer
     authentication_classes = []
     permission_classes = []
-    pagination_class = PageNumberPagination
+    pagination_class = CustomPageNumberPagination
 
     def get_queryset(self):
         queryset = Job.objects.all()
         id = self.request.query_params.get('id',None)
         if id is not None:
-            queryset = queryset.filter(user__id=id)
+            queryset = queryset.filter(id=id)
         return queryset
 
 class JobTypeViewSet(ModelViewSet):
@@ -31,7 +35,7 @@ class JobTypeViewSet(ModelViewSet):
         return queryset
 
 class CompanyViewSet(ModelViewSet):
-    permission_classes = []
+    permission_classes = [IsAuthenticated,]
     serializer_class = CompanySerializer
 
     def get_queryset(self):

@@ -62,4 +62,4 @@ class Application(models.Model):
     class Meta:
         ordering = ['-applied',]    
     def __str__(self):
-        return self.seeker.user.first_name
+        return self.seeker.user.first_name+"'s Application"

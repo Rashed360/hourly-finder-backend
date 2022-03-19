@@ -10,11 +10,12 @@ class JobType(models.Model):
 
 
 class Company(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Company Name')
-    moto = models.CharField(max_length=200, verbose_name='Company Moto')
+    recruiter = models.ForeignKey(RecruiterProfile,on_delete=models.CASCADE,related_name='com_recter')
+    name = models.CharField(max_length=100, blank=True, verbose_name='Company Name')
+    moto = models.CharField(max_length=200, blank=True, verbose_name='Company Moto')
     description = models.TextField(blank=True,verbose_name='Description')
     logo = models.ImageField(upload_to='jobs', blank=True, verbose_name='Company Logo')
-    location = models.CharField(max_length=50, verbose_name='Company Location')
+    location = models.CharField(max_length=50, blank=True, verbose_name='Company Location')
     def __str__(self):
         return self.name +', '+ self.location
 

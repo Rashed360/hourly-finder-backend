@@ -1,5 +1,6 @@
 from djoser.serializers import UserCreateSerializer
 from app_user.models import SeekerProfile,RecruiterProfile
+from app_job.models import Company
 from .models import User
 
 class UserCreateSerializer(UserCreateSerializer):
@@ -19,5 +20,6 @@ class UserCreateSerializer(UserCreateSerializer):
         if user_type==1:
             SeekerProfile.objects.create(user=user)
         elif user_type==2:
-            RecruiterProfile.objects.create(user=user)        
+            recruiter = RecruiterProfile.objects.create(user=user)
+            Company.objects.create(recruiter=recruiter)
         return user

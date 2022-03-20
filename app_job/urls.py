@@ -1,4 +1,5 @@
-from .views import JobViewSet,JobTypeViewSet,CompanyViewSet,ApplicationViewSet
+from django.urls import path
+from .views import JobViewSet,JobTypeViewSet,CompanyViewSet,ApplicationViewSet,AllJobListAPIView
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -7,6 +8,8 @@ router.register(r'type', JobTypeViewSet, basename='jobType')
 router.register(r'company', CompanyViewSet, basename='company')
 router.register(r'apply', ApplicationViewSet, basename='apply')
 
-urlpatterns = []
+urlpatterns = [
+    path('all/', AllJobListAPIView.as_view()),
+]
 
 urlpatterns += router.urls

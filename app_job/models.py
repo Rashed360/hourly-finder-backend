@@ -64,3 +64,14 @@ class Application(models.Model):
         ordering = ['-applied',]    
     def __str__(self):
         return self.seeker.user.first_name+"'s Application"
+
+
+class Work(models.Model):
+    job = models.ForeignKey(Job,on_delete=models.CASCADE,related_name='work_job')
+    created = models.DateTimeField(auto_now_add=True)
+
+
+    class Meta:
+        ordering = ['-created',]    
+    def __str__(self):
+        return self.job+" as Work"

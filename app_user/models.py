@@ -17,3 +17,10 @@ class SeekerProfile(models.Model):
     expertise = models.CharField(max_length=50,blank=True)
     def __str__(self):
         return self.user.first_name+ ' Seeker'
+
+class Review(models.Model):
+    reveiwer = models.ForeignKey(User,on_delete=models.CASCADE, related_name='reviewer')
+    reviewed = models.ForeignKey(User,on_delete=models.CASCADE, related_name='reviewed')
+    body = models.TextField(blank=True)
+    def __str__(self):
+        return self.reveiwer + ' reviewed '+ self.reviewed

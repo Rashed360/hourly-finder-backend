@@ -1,14 +1,34 @@
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.pagination import PageNumberPagination
 from .models import Job,JobType,Company,Application
-from .serializers import JobSerializer,JobTypeSerializer,CompanySerializer,ApplicationSerializer
+from .serializers import JobSerializer,JobTypeSerializer,CompanySerializer,ApplicationSerializer,AllJobSerializer
 
 class CustomPageNumberPagination(PageNumberPagination):
     page_size = 2
     page_size_query_param = 'page_size'
     max_page_size = 10
+
+class AllJobListAPIView(ListAPIView):
+    authentication_classes = []
+    permission_classes = []
+    queryset = Job.objects.all()
+    serializer_class = AllJobSerializer
+
+
+class JobViewSet(ModelViewSet):
+    authentication_classes = []
+    permission_classes = []
+    pagination_class = CustomPageNumberPagination
+
+    def get_queryset(self):
+        queryset = Job.objects.all()
+        id = self.request.query_params.get('id',None)
+        if id is not None:
+            queryset = queryset.filter(id=id)
+        return queryset
 
 class JobViewSet(ModelViewSet):
     serializer_class = JobSerializer

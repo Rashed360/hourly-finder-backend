@@ -1,3 +1,4 @@
+from django.forms import SlugField
 from rest_framework.serializers import ModelSerializer
 from .models import Job,JobType,Company,Application
 
@@ -33,5 +34,5 @@ class AllJobSerializer(ModelSerializer):
     company = CompanySerial()
     class Meta:
         model = Job
-        fields = ('title','type','keyword','created','company')
+        fields = ('title','slug','type','keyword','created','company')
         read_only_fields = ('created',)

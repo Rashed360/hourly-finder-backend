@@ -1,5 +1,6 @@
 from django.db import models
 from app_user.models import RecruiterProfile,SeekerProfile
+from uuid import uuid4
 
 
 class JobType(models.Model):
@@ -26,6 +27,7 @@ class Job(models.Model):
 
     title = models.CharField(max_length=150, verbose_name='Job Title')
     image = models.ImageField(upload_to='jobs',blank=True, verbose_name='Job Banner')
+    slug = models.SlugField(max_length=264, unique=True)
 
     salary = models.CharField(max_length=10, verbose_name='Salary')
     type = models.ForeignKey(JobType,on_delete=models.CASCADE,related_name='type')
@@ -46,10 +48,13 @@ class Job(models.Model):
     
     class Meta:
         ordering = ['-created',]
+
+    def save(self, *args, **kwargs):
+        self.slug = self.title.replace(" ","-")+'-'+str(uuid4())
+        super(Job, self).save(*args, **kwargs)
     
     def __str__(self):
         return self.title
-
 
 class Application(models.Model):
     job = models.ForeignKey(Job,on_delete=models.CASCADE,related_name='job')

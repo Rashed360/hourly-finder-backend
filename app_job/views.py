@@ -19,18 +19,6 @@ class AllJobListAPIView(ListAPIView):
 
 
 class JobViewSet(ModelViewSet):
-    authentication_classes = []
-    permission_classes = []
-    pagination_class = CustomPageNumberPagination
-
-    def get_queryset(self):
-        queryset = Job.objects.all()
-        id = self.request.query_params.get('id',None)
-        if id is not None:
-            queryset = queryset.filter(id=id)
-        return queryset
-
-class JobViewSet(ModelViewSet):
     serializer_class = JobSerializer
     authentication_classes = []
     permission_classes = []
@@ -38,9 +26,9 @@ class JobViewSet(ModelViewSet):
 
     def get_queryset(self):
         queryset = Job.objects.all()
-        id = self.request.query_params.get('id',None)
-        if id is not None:
-            queryset = queryset.filter(id=id)
+        slug = self.request.query_params.get('slug',None)
+        if slug is not None:
+            queryset = queryset.filter(slug=slug)
         return queryset
 
 class JobTypeViewSet(ModelViewSet):

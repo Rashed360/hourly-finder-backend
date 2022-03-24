@@ -1,4 +1,5 @@
 from djoser.serializers import UserCreateSerializer
+from rest_framework.serializers import ModelSerializer
 from app_user.models import SeekerProfile,RecruiterProfile
 from app_job.models import Company
 from .models import User
@@ -23,3 +24,8 @@ class UserCreateSerializer(UserCreateSerializer):
             recruiter = RecruiterProfile.objects.create(user=user)
             Company.objects.create(recruiter=recruiter)
         return user
+
+class UserSerializer(ModelSerializer):
+    class Meta(UserCreateSerializer.Meta):
+        model = User
+        fields = ('id','email','username','first_name','last_name','user_type')

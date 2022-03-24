@@ -1,35 +1,20 @@
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.generics import ListAPIView
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import BasicAuthentication
-from rest_framework.pagination import PageNumberPagination
+from multiprocessing import context
+from rest_framework.parsers import FormParser,MultiPartParser
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from app_auth.models import User
+from app_user.models import RecruiterProfile
 from .models import Job,JobType,Company,Application
-from .serializers import JobSerializer,JobTypeSerializer,CompanySerializer,ApplicationSerializer,AllJobSerializer
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.generics import ListAPIView,CreateAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import PageNumberPagination
+from .serializers import CombinedSerializer,JobSerializer,JobTypeSerializer,CompanySerializer,ApplicationSerializer, AllJobSerializer
 
 class CustomPageNumberPagination(PageNumberPagination):
     page_size = 2
     page_size_query_param = 'page_size'
     max_page_size = 10
-
-class AllJobListAPIView(ListAPIView):
-    authentication_classes = []
-    permission_classes = []
-    queryset = Job.objects.all()
-    serializer_class = AllJobSerializer
-
-
-class JobViewSet(ModelViewSet):
-    serializer_class = JobSerializer
-    authentication_classes = []
-    permission_classes = []
-    pagination_class = CustomPageNumberPagination
-
-    def get_queryset(self):
-        queryset = Job.objects.all()
-        slug = self.request.query_params.get('slug',None)
-        if slug is not None:
-            queryset = queryset.filter(slug=slug)
-        return queryset
 
 class JobTypeViewSet(ModelViewSet):
     permission_classes = []
@@ -63,3 +48,32 @@ class ApplicationViewSet(ModelViewSet):
         if id is not None:
             queryset = queryset.filter(job_id=id)
         return queryset
+
+#---Single-Job-View
+class SingleJobAPIView(APIView):
+    permission_classes = []
+    def get(self, request, slug):
+        job = Job.objects.get(slug=slug)
+        recruiter = RecruiterProfile.objects.get(id=job.recruiter.id)
+        filters = {}
+        filters['job'] = Job.objects.get(slug=slug)
+        filters['recruiter'] = RecruiterProfile.objects.get(id=job.recruiter.id)
+        filters['company'] = Company.objects.get(id=job.company.id)
+        filters['user'] = User.objects.get(id=recruiter.user.id)
+        serializer = CombinedSerializer(filters)
+        return Response(serializer.data)
+
+#---Single-Job-Create
+class SingleJobCreateAPIView(CreateAPIView):
+    permission_classes = []
+    queryset = Job.objects.all()
+    serializer_class = JobSerializer
+    parser_classes = [FormParser,MultiPartParser]
+
+#---All-Job-View
+class AllJobListAPIView(ListAPIView):
+    authentication_classes = []
+    permission_classes = []
+    queryset = Job.objects.all()
+    serializer_class = AllJobSerializer
+    pagination_class = CustomPageNumberPagination

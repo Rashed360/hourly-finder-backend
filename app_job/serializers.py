@@ -1,5 +1,8 @@
-from django.forms import SlugField
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer,Serializer
+from app_auth.models import User
+from app_auth.serializers import UserSerializer
+from app_user.models import RecruiterProfile
+from app_user.serializers import RecruiterProfileSerializer
 from .models import Job,JobType,Company,Application
 
 
@@ -26,13 +29,33 @@ class ApplicationSerializer(ModelSerializer):
         model = Application
         fields = "__all__"
 
-class CompanySerial(ModelSerializer):
-    class Meta:
-        model = Company
-        fields = ('logo','name','location')
+
+class CombinedSerializer(Serializer):
+    job = JobSerializer(read_only=True)
+    recruiter = RecruiterProfileSerializer(read_only=True)
+    company = CompanySerializer(read_only=True)
+    user = UserSerializer(read_only=True)
+
+
+
 class AllJobSerializer(ModelSerializer):
+    class CompanySerial(ModelSerializer):
+        class Meta:
+            model = Company
+            fields = ('logo','name','location')
     company = CompanySerial()
+    class RecruiterSerial(ModelSerializer):
+        class UserSerial(ModelSerializer):
+            class Meta:
+                model = User
+                fields = ('username',)
+        user = UserSerial()
+        class Meta:
+            model = RecruiterProfile
+            fields = ('user',)
+    recruiter = RecruiterSerial()
+    
     class Meta:
         model = Job
-        fields = ('title','slug','type','keyword','created','company')
+        fields = ('title','slug','type','keyword','created','company','recruiter')
         read_only_fields = ('created',)

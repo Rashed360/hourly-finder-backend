@@ -4,16 +4,22 @@ from app_auth.models import User
 
 class RecruiterProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    bio = models.TextField()
+    picture = models.ImageField(upload_to='users', blank=True, verbose_name='Profile Picture')
     phone = models.CharField(max_length=15,blank=True)
+    identity = models.CharField(max_length=30,blank=True)
+    dob = models.CharField(max_length=15,blank=True)
+    bio = models.TextField()
     designation = models.CharField(max_length=50,blank=True)
     def __str__(self):
         return self.user.first_name+ ' Recruiter'
 
 class SeekerProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    bio = models.TextField()
+    picture = models.ImageField(upload_to='users', blank=True, verbose_name='Profile Picture')
     phone = models.CharField(max_length=15,blank=True)
+    identity = models.CharField(max_length=30,blank=True)
+    dob = models.CharField(max_length=15,blank=True)
+    bio = models.TextField()
     expertise = models.CharField(max_length=50,blank=True)
     def __str__(self):
         return self.user.first_name+ ' Seeker'

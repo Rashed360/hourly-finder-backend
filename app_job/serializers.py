@@ -31,10 +31,26 @@ class ApplicationSerializer(ModelSerializer):
 
 
 class CombinedSerializer(Serializer):
-    job = JobSerializer(read_only=True)
-    recruiter = RecruiterProfileSerializer(read_only=True)
-    company = CompanySerializer(read_only=True)
-    user = UserSerializer(read_only=True)
+    class JobSerial(ModelSerializer):
+        class Meta:
+            model = Job
+            exclude = ['company','recruiter']
+    class RecruiterProfileSerial(ModelSerializer):
+        class Meta:
+            model = RecruiterProfile
+            exclude = ['id','user','dob','identity']
+    class CompanySerial(ModelSerializer):
+        class Meta:
+            model = Company
+            exclude = ['id','recruiter']
+    class UserSerial(ModelSerializer):
+        class Meta:
+            model = User
+            fields = ('email','username','first_name','last_name')
+    job = JobSerial(read_only=True)
+    recruiter = RecruiterProfileSerial(read_only=True)
+    company = CompanySerial(read_only=True)
+    user = UserSerial(read_only=True)
 
 
 

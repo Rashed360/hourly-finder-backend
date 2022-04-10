@@ -12,6 +12,7 @@ django-templated-mail==1.1.1
 djangorestframework==3.13.1
 djangorestframework-simplejwt==4.8.0
 djoser==2.1.0
+gunicorn==20.1.0
 idna==3.3
 itypes==1.2.0
 Jinja2==3.0.3
@@ -32,3 +33,4 @@ sqlparse==0.4.2
 tzdata==2021.5
 uritemplate==4.1.1
 urllib3==1.26.8
+whitenoise==6.0.0

@@ -1,0 +1,1 @@
+web: gunicorn hourly_finder.wsgi --log-file -

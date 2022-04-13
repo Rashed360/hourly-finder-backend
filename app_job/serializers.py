@@ -1,8 +1,6 @@
 from rest_framework.serializers import ModelSerializer,Serializer
 from app_auth.models import User
-from app_auth.serializers import UserSerializer
 from app_user.models import RecruiterProfile
-from app_user.serializers import RecruiterProfileSerializer
 from .models import Job,JobType,Company,Application
 
 

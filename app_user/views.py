@@ -1,8 +1,11 @@
+from app_auth.models import User
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.generics import UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from .models import SeekerProfile,RecruiterProfile
-from .serializers import SeekerProfileSerializer,RecruiterProfileSerializer
+from .serializers import SeekerProfileSerializer,RecruiterProfileSerializer,RecruiterProfileUpdateSerializer
 from django.shortcuts import redirect
+from decouple import config
 
 
 class SeekerProfileViewSet(ModelViewSet):
@@ -27,10 +30,20 @@ class RecruiterProfileViewSet(ModelViewSet):
             queryset = queryset.filter(user=id)
         return queryset
 
+#---Update-Profile
+class ProfileUpdateAPIView(UpdateAPIView):
+    permission_classes = []
+    queryset = User.objects.all()
+    serializer_class = RecruiterProfileUpdateSerializer
 
-# Redirect Views
+
+
+
+
+
+#---Redirect Views
 def activate(request,uid,token):
-    return redirect(f"http://127.0.0.1:3000/activate/{uid}/{token}")
+    return redirect(f"{config('FRONT_END_SERVER')}/activate/{uid}/{token}")
 
 def password_reset(request,uid,token):
-    return redirect(f"http://127.0.0.1:3000/password-reset/{uid}/{token}")
+    return redirect(f"{config('FRONT_END_SERVER')}/password-reset/{uid}/{token}")

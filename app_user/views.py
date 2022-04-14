@@ -2,6 +2,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from .models import SeekerProfile,RecruiterProfile
 from .serializers import SeekerProfileSerializer,RecruiterProfileSerializer
+from rest_framework.parsers import FormParser,MultiPartParser
 from django.shortcuts import redirect
 from decouple import config
 
@@ -9,6 +10,7 @@ from decouple import config
 class SeekerProfileViewSet(ModelViewSet):
     permission_classes = [ ]
     serializer_class = SeekerProfileSerializer
+    parser_classes = [FormParser,MultiPartParser]
 
     def get_queryset(self):
         queryset = SeekerProfile.objects.all()
@@ -20,6 +22,7 @@ class SeekerProfileViewSet(ModelViewSet):
 class RecruiterProfileViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated, ]
     serializer_class = RecruiterProfileSerializer
+    parser_classes = [FormParser,MultiPartParser]
 
     def get_queryset(self):
         queryset = RecruiterProfile.objects.all()

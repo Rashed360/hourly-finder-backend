@@ -1,9 +1,11 @@
+from asyncio.windows_events import NULL
 from app_auth.models import User
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.generics import UpdateAPIView
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .models import SeekerProfile,RecruiterProfile
-from .serializers import SeekerProfileSerializer,RecruiterProfileSerializer,RecruiterProfileUpdateSerializer
+from .serializers import SeekerProfileSerializer,RecruiterProfileSerializer,RecruiterProfileUpdateSerializer,SeekerProfileUpdateSerializer
 from django.shortcuts import redirect
 from decouple import config
 
@@ -31,14 +33,22 @@ class RecruiterProfileViewSet(ModelViewSet):
         return queryset
 
 #---Update-Profile
-class ProfileUpdateAPIView(UpdateAPIView):
+class ProfileUpdateAPIView(APIView):
     permission_classes = []
-    queryset = User.objects.all()
-    serializer_class = RecruiterProfileUpdateSerializer
-
-
-
-
+    def patch(self, request, id):
+        user = User.objects.get(id=id)
+        if user.user_type == 1:
+            filters = {}
+            filters['user'] = User.objects.get(id=id)
+            filters['recruiter'] = RecruiterProfile.objects.get(user=user)
+            serializer = RecruiterProfileUpdateSerializer(filters)
+            return Response(serializer.data)
+        elif user.user_type == 2:
+            filters = {}
+            filters['user'] = User.objects.get(id=id)
+            filters['seeker'] = SeekerProfile.objects.get(user=user)
+            serializer = SeekerProfileUpdateSerializer(filters)
+            return Response(serializer.data)         
 
 
 #---Redirect Views

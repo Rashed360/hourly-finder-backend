@@ -8,7 +8,7 @@ router.register(r'seeker', SeekerProfileViewSet, basename='seeker')
 router.register(r'recruiter', RecruiterProfileViewSet, basename='recruiter')
 
 urlpatterns = [
-    path('update-profile/', ProfileUpdateAPIView.as_view(), name='update-profile'),
+    path('update-profile/<id>', ProfileUpdateAPIView.as_view(), name='update-profile'),
     path('activate/<uid>/<token>', activate, name='activate'),
     path('password-reset/<uid>/<token>', password_reset, name='password-reset'),
 ]

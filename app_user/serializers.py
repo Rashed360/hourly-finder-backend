@@ -19,9 +19,21 @@ class RecruiterProfileUpdateSerializer(Serializer):
         class Meta:
             model = User
             fields = ('first_name','last_name')
-    class ProfileSerial(ModelSerializer):
+    class RecruiterSerial(ModelSerializer):
         class Meta:
             model = RecruiterProfile
             fields = ('dob','phone')
     user = UserSerial()
-    profile = ProfileSerial()
+    recruiter = RecruiterSerial()
+
+class SeekerProfileUpdateSerializer(Serializer):
+    class UserSerial(ModelSerializer):
+        class Meta:
+            model = User
+            fields = ('first_name','last_name')
+    class SeekerSerial(ModelSerializer):
+        class Meta:
+            model = SeekerProfile
+            fields = ('dob','phone')
+    user = UserSerial()
+    recruiter = SeekerSerial()

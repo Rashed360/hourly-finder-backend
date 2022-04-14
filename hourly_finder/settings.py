@@ -111,9 +111,9 @@ DJOSER = {
     'SEND_CONFIRMATION_EMAIL': True,
     'PASSWORD_RESET_CONFIRM_URL': 'user/password-reset/{uid}/{token}',
     'SERIALIZERS': {
-        'user': 'app_auth.serializers.UserCreateSerializer',
-        'current_user': 'app_auth.serializers.UserCreateSerializer',
         'user_create': 'app_auth.serializers.UserCreateSerializer',
+        'user': 'app_auth.serializers.UserSerializer',
+        'current_user': 'app_auth.serializers.UserSerializer',
     }
 }
 

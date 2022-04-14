@@ -14,26 +14,49 @@ class RecruiterProfileSerializer(ModelSerializer):
         model = RecruiterProfile
         fields = '__all__'
 
-class RecruiterProfileUpdateSerializer(Serializer):
-    class UserSerial(ModelSerializer):
-        class Meta:
-            model = User
-            fields = ('first_name','last_name')
-    class RecruiterSerial(ModelSerializer):
-        class Meta:
-            model = RecruiterProfile
-            fields = ('dob','phone')
-    user = UserSerial()
-    recruiter = RecruiterSerial()
 
-class SeekerProfileUpdateSerializer(Serializer):
-    class UserSerial(ModelSerializer):
-        class Meta:
-            model = User
-            fields = ('first_name','last_name')
-    class SeekerSerial(ModelSerializer):
-        class Meta:
-            model = SeekerProfile
-            fields = ('dob','phone')
-    user = UserSerial()
-    recruiter = SeekerSerial()
+# class RecruiterProfileUpdateSerializer(ModelSerializer):
+#     class RecruiterSerial(ModelSerializer):
+#         class Meta:
+#             model = RecruiterProfile
+#             fields = ('dob','phone')
+#     recruiter = RecruiterSerial()
+
+#     class Meta:
+#         model = User
+#         fields = ('first_name','last_name')
+
+#     def update(self, validated_data):
+#         profile_data = validated_data.pop('recruiter')
+#         user = User.objects.update(
+#             first_name=validated_data["first_name"],
+#             last_name=validated_data["last_name"]
+#         )
+#         RecruiterProfile.objects.update(
+#             dob=profile_data.get('dob'),
+#             phone=profile_data.get('phone')
+#         )
+#         return user
+        
+# class SeekerProfileUpdateSerializer(ModelSerializer):
+#     class SeekerSerial(ModelSerializer):
+#         class Meta:
+#             model = SeekerProfile
+#             fields = ('dob','phone')
+#     seeker = SeekerSerial()
+
+#     class Meta:
+#         model = User
+#         fields = ('first_name','last_name')
+
+#     def update(self, validated_data):
+#         profile_data = validated_data.pop('seeker')
+#         user = User.objects.update(
+#             first_name=validated_data["first_name"],
+#             last_name=validated_data["last_name"]
+#         )
+#         SeekerProfile.objects.update(
+#             dob=profile_data.get('dob'),
+#             phone=profile_data.get('phone')
+#         )
+#         return user

@@ -4,6 +4,7 @@ from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+TEMPLATES_DIR = BASE_DIR.joinpath('templates')
 STATIC_DIR = BASE_DIR.joinpath('static')
 MEDIA_DIR = BASE_DIR.joinpath('media')
 
@@ -13,7 +14,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['hourly-finder-backend.herokuapp.com','hourly-finder.herokuapp.com','localhost']
+ALLOWED_HOSTS = ['*']
 
 # SECURITY WARNING: don't run with CORS-allow-all turned on in production, use whitelist!
 CORS_ORIGIN_ALLOW_ALL = True
@@ -52,7 +53,7 @@ ROOT_URLCONF = 'hourly_finder.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_DIR,],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -104,16 +105,22 @@ REST_FRAMEWORK = {
 }
 
 # Djoser Settings
+DOMAIN = ('localhost:3000') 
+SITE_NAME = ('Hourly-Finder')
 DJOSER = {
     'LOGIN_FIELD': 'email',
     'SEND_ACTIVATION_EMAIL': True,
-    'ACTIVATION_URL': 'user/activate/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_CONFIRMATION_EMAIL': True,
-    'PASSWORD_RESET_CONFIRM_URL': 'user/password-reset/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'password-reset/{uid}/{token}',
     'SERIALIZERS': {
         'user_create': 'app_auth.serializers.UserCreateSerializer',
         'user': 'app_auth.serializers.UserSerializer',
         'current_user': 'app_auth.serializers.UserSerializer',
+    },
+    'EMAIL': {
+            'activation': 'app_auth.email.ActivationEmail',
+            'password_reset': 'app_auth.email.PasswordResetEmail',
     }
 }
 

@@ -26,12 +26,4 @@ class RecruiterProfileViewSet(ModelViewSet):
         id = self.request.query_params.get('id',None)
         if id is not None:
             queryset = queryset.filter(user=id)
-        return queryset    
-
-
-#---Redirect Views
-def activate(request,uid,token):
-    return redirect(f"{config('FRONT_END_SERVER')}/activate/{uid}/{token}")
-
-def password_reset(request,uid,token):
-    return redirect(f"{config('FRONT_END_SERVER')}/password-reset/{uid}/{token}")
+        return queryset

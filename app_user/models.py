@@ -10,6 +10,7 @@ class RecruiterProfile(models.Model):
     dob = models.CharField(max_length=15,blank=True)
     bio = models.TextField()
     designation = models.CharField(max_length=50,blank=True)
+    address = models.CharField(max_length=150,blank=True)
     def __str__(self):
         return self.user.first_name+ ' Recruiter'
 
@@ -21,8 +22,10 @@ class SeekerProfile(models.Model):
     dob = models.CharField(max_length=15,blank=True)
     bio = models.TextField()
     expertise = models.CharField(max_length=50,blank=True)
+    address = models.CharField(max_length=150,blank=True)
     def __str__(self):
         return self.user.first_name+ ' Seeker'
+
 
 class Review(models.Model):
     reveiwer = models.ForeignKey(User,on_delete=models.CASCADE, related_name='reviewer')

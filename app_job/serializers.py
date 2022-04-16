@@ -21,6 +21,11 @@ class JobSerializer(ModelSerializer):
         model = Job
         fields = "__all__"
 
+class JobInfoSerializer(ModelSerializer):
+    class Meta:
+        model = Job
+        fields = ('title','starting','type')
+
 
 class ApplicationSerializer(ModelSerializer):
     class Meta:

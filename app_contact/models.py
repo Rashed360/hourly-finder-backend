@@ -20,3 +20,14 @@ class Contact(models.Model):
         return self.subject
 
 
+class Newsletter(models.Model):
+    email = models.EmailField(unique=True, max_length=100,verbose_name='Subscribe Email')
+    join_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-join_date',]
+
+    def __str__(self):
+        return self.email
+
+

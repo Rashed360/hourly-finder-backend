@@ -15,6 +15,11 @@ class CompanySerializer(ModelSerializer):
         model = Company
         fields = '__all__'
 
+class CompanyViewSerializer(ModelSerializer):
+    class Meta:
+        model = Company
+        exclude = ('id','recruiter')
+
 
 class JobSerializer(ModelSerializer):
     class Meta:

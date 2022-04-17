@@ -14,49 +14,27 @@ class RecruiterProfileSerializer(ModelSerializer):
         model = RecruiterProfile
         fields = '__all__'
 
+class PublicRecruiterProfileSerializer(Serializer):
+    class RecruiterProfileSerial(ModelSerializer):
+        class Meta:
+            model = RecruiterProfile
+            fields = ('bio','phone','picture','address')
+    class UserSerial(ModelSerializer):
+        class Meta:
+            model = User
+            fields = ('user_type','email','username','first_name','last_name')
+    recruiter = RecruiterProfileSerial(read_only=True)
+    # company = CompanySerial(read_only=True)
+    user = UserSerial(read_only=True)
 
-# class RecruiterProfileUpdateSerializer(ModelSerializer):
-#     class RecruiterSerial(ModelSerializer):
-#         class Meta:
-#             model = RecruiterProfile
-#             fields = ('dob','phone')
-#     recruiter = RecruiterSerial()
-
-#     class Meta:
-#         model = User
-#         fields = ('first_name','last_name')
-
-#     def update(self, validated_data):
-#         profile_data = validated_data.pop('recruiter')
-#         user = User.objects.update(
-#             first_name=validated_data["first_name"],
-#             last_name=validated_data["last_name"]
-#         )
-#         RecruiterProfile.objects.update(
-#             dob=profile_data.get('dob'),
-#             phone=profile_data.get('phone')
-#         )
-#         return user
-        
-# class SeekerProfileUpdateSerializer(ModelSerializer):
-#     class SeekerSerial(ModelSerializer):
-#         class Meta:
-#             model = SeekerProfile
-#             fields = ('dob','phone')
-#     seeker = SeekerSerial()
-
-#     class Meta:
-#         model = User
-#         fields = ('first_name','last_name')
-
-#     def update(self, validated_data):
-#         profile_data = validated_data.pop('seeker')
-#         user = User.objects.update(
-#             first_name=validated_data["first_name"],
-#             last_name=validated_data["last_name"]
-#         )
-#         SeekerProfile.objects.update(
-#             dob=profile_data.get('dob'),
-#             phone=profile_data.get('phone')
-#         )
-#         return user
+class PublicSeekerProfileSerializer(Serializer):
+    class SeekerProfileSerial(ModelSerializer):
+        class Meta:
+            model = SeekerProfile
+            fields = ('bio','phone','picture','address')
+    class UserSerial(ModelSerializer):
+        class Meta:
+            model = User
+            fields = ('user_type','email','username','first_name','last_name')
+    seeker = SeekerProfileSerial(read_only=True)
+    user = UserSerial(read_only=True)

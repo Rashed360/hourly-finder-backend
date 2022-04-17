@@ -1,4 +1,4 @@
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives, send_mail
 from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import AllowAny
@@ -19,9 +19,9 @@ def send_email(data):
     }
 
     message = '\n'.join(body.values())
-    sender = data['email']
+    from_email = data['email']
     recipient = ['info.hourlyfinder@gmail.com']
-    send_mail(subject, message, sender, recipient, fail_silently=True)
+    send_mail(subject, message, from_email, recipient, fail_silently=True)
 
 # Contact Us
 class ContactCreateAPIView(CreateAPIView):
@@ -38,4 +38,24 @@ class ContactCreateAPIView(CreateAPIView):
 
 
 # Newsletter 
+def newsletter_mail(data):
+    subject = 'Thanks for HourlyFinder Newsletter Subscription.'
+    text_content = 'Subscription Notification'
+    from_email = 'info.hourlyfinder@gmail.com'
+    to = data['email']
+    html_content = '<p>Dear User, Thanks for being with us.You will get notification of latest update of our website. <strong>-Team HourlyFinder</strong></p>'
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
 
+class NewsletterCreateAPIView(CreateAPIView):
+    permission_classes = [AllowAny]
+    queryset = Newsletter.objects.all()
+    serializer_class = NewsletterSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        newsletter_mail(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

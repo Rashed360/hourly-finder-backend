@@ -1,4 +1,5 @@
 from rest_framework.serializers import ModelSerializer
+from rest_framework.validators import UniqueTogetherValidator
 
 from .models import Contact, Newsletter
 
@@ -12,3 +13,9 @@ class NewsletterSerializer(ModelSerializer):
     class Meta:
         model = Newsletter
         fields = "__all__"
+        validators = [
+            UniqueTogetherValidator(
+                queryset=Newsletter.objects.all(),
+                fields=['email']
+            )
+        ]

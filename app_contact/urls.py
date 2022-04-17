@@ -1,5 +1,7 @@
 from django.urls import path
 
-# urlpatterns = [
-#     path('contact', SingleJobAPIView.as_view()),
-# ]
+from .views import ContactCreateAPIView
+
+urlpatterns = [
+    path('create', ContactCreateAPIView.as_view()),
+]

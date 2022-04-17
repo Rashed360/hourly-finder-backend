@@ -5,7 +5,7 @@ from .models import Contact, Newsletter
 
 # Register your models here.
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ['phone', 'email', 'subject', 'message']
+    list_display = ['phone', 'email', 'subject', 'message', 'report_date']
 
 class NewsletterAdmin(admin.ModelAdmin):
     list_display = [ 'email', 'join_date']

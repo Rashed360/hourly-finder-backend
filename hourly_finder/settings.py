@@ -1,5 +1,6 @@
-from pathlib import Path
 from datetime import timedelta
+from pathlib import Path
+
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -34,6 +35,7 @@ INSTALLED_APPS = [
     'app_auth',
     'app_user',
     'app_job',
+    'app_contact',
 ]
 
 MIDDLEWARE = [

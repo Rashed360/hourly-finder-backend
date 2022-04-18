@@ -9,10 +9,22 @@ class SeekerProfileSerializer(ModelSerializer):
         model = SeekerProfile
         fields = '__all__'
 
+class AvailableSeekerSerializer(ModelSerializer):
+    class UserSerial(ModelSerializer):
+        class Meta:
+            model = User
+            fields = ('username','first_name','last_name')
+    user = UserSerial()
+    class Meta:
+        model = SeekerProfile
+        fields = ('picture','bio','expertise','user')
+
+
 class RecruiterProfileSerializer(ModelSerializer):
     class Meta:
         model = RecruiterProfile
         fields = '__all__'
+
 
 class PublicRecruiterProfileSerializer(Serializer):
     class RecruiterProfileSerial(ModelSerializer):
@@ -26,6 +38,7 @@ class PublicRecruiterProfileSerializer(Serializer):
     recruiter = RecruiterProfileSerial(read_only=True)
     # company = CompanySerial(read_only=True)
     user = UserSerial(read_only=True)
+
 
 class PublicSeekerProfileSerializer(Serializer):
     class SeekerProfileSerial(ModelSerializer):

@@ -1,14 +1,15 @@
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from app_auth.models import User
 from .models import SeekerProfile,RecruiterProfile
-from .serializers import SeekerProfileSerializer,RecruiterProfileSerializer,PublicRecruiterProfileSerializer,PublicSeekerProfileSerializer
+from .serializers import SeekerProfileSerializer,RecruiterProfileSerializer,PublicRecruiterProfileSerializer,PublicSeekerProfileSerializer,AvailableSeekerSerializer
 
 
 class SeekerProfileViewSet(ModelViewSet):
-    permission_classes = [ ]
+    permission_classes = [IsAuthenticated,]
     serializer_class = SeekerProfileSerializer
 
     def get_queryset(self):
@@ -19,7 +20,7 @@ class SeekerProfileViewSet(ModelViewSet):
         return queryset
 
 class RecruiterProfileViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [IsAuthenticated,]
     serializer_class = RecruiterProfileSerializer
 
     def get_queryset(self):
@@ -47,3 +48,8 @@ class PublicProfileView(APIView):
             serializer = PublicRecruiterProfileSerializer(filters)
             return Response(serializer.data)
         return Response('ERROR')
+
+class AvailableSeekerView(ListAPIView):
+    permission_classes = []
+    queryset = SeekerProfile.objects.all()
+    serializer_class = AvailableSeekerSerializer

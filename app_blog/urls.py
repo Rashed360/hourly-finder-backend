@@ -1,6 +1,8 @@
 from django.urls import path
 
+from .views import AllBlogListAPIView
+
 urlpatterns = [
-    # path('create', ContactCreateAPIView.as_view()),
-    # path('newsletter', NewsletterCreateAPIView.as_view()),
+    path('', AllBlogListAPIView.as_view()),
+
 ]

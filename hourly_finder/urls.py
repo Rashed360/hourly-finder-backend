@@ -16,7 +16,7 @@ urlpatterns = [
     path('user/', include('app_user.urls')),
     path('jobs/', include('app_job.urls')),
     path('contact/', include('app_contact.urls')),
-    path('blog/', include('app_blog.urls')),
+    path('blogs/', include('app_blog.urls')),
     re_path(r'^favicon\.ico$', favicon_view),
 ]
 

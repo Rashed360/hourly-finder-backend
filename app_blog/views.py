@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Blog
-from .serializers import BlogSerializers
+from .serializers import AllBlogSerializers, SingleBlogSerializers
 
 
 # Create your views here.
@@ -18,12 +18,12 @@ class CustomPageNumberPagination(PageNumberPagination):
 class AllBlogListAPIView(ListAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Blog.objects.all()
-    serializer_class = BlogSerializers
+    serializer_class = AllBlogSerializers
     pagination_class = CustomPageNumberPagination
 
 #---Single-Blog--View
 class SingleBlogAPIView(RetrieveAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Blog.objects.all()
-    serializer_class = BlogSerializers
+    serializer_class = SingleBlogSerializers
     lookup_field = 'slug'

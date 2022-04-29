@@ -29,7 +29,7 @@ class JobSerializer(ModelSerializer):
 class JobInfoSerializer(ModelSerializer):
     class Meta:
         model = Job
-        fields = ('title','starting','type')
+        fields = ('title','starting','type','slug')
 
 
 class ApplicationSerializer(ModelSerializer):

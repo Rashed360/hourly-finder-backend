@@ -76,7 +76,7 @@
 
 ### Requirements
 
-```json
+```
 asgiref==3.5.0
 certifi==2021.10.8
 cffi==1.15.0

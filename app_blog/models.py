@@ -35,7 +35,8 @@ class Blog(models.Model):
         ordering = ['-published_date',]
 
     def save(self, *args, **kwargs):
-        self.slug = self.title.replace(" ","-")+'-'+str(uuid4())
+        re_chars = {' ': '-', '/': '', '?': '', '=': ''}
+        self.slug = self.title.lower().translate(str.maketrans(re_chars))+'-'+str(uuid4())
         super(Blog, self).save(*args, **kwargs)
     
     def __str__(self):

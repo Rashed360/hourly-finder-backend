@@ -64,6 +64,16 @@ class ApplicationViewSet(ModelViewSet):
             queryset = queryset.filter(job_id=id)
         return queryset
 
+class JobViewSet(ModelViewSet):
+    permission_classes = []
+    serializer_class = JobSerializer
+    def get_queryset(self):
+        queryset = Job.objects.all()
+        id = self.request.query_params.get('id',None)
+        if id is not None:
+            queryset = queryset.filter(id=id)
+        return queryset
+
 #---Single-Job-View
 class SingleJobAPIView(APIView):
     permission_classes = []

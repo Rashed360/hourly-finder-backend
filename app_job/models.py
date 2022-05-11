@@ -40,6 +40,7 @@ class Job(models.Model):
     level = models.PositiveSmallIntegerField(choices=LEVELS,default=1,verbose_name='Level Required')
     starting = models.CharField(max_length=80, verbose_name='Starting Date')
     latlng = models.CharField(max_length=50, verbose_name='Latitute,Longitude')
+    location = models.CharField(max_length=50, verbose_name='Job Location', default='')
 
     overview = models.TextField(blank=True,verbose_name='Job Overview')
     todo = models.TextField(blank=True,verbose_name='Job Responsibilities')

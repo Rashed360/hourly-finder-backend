@@ -41,6 +41,8 @@ class Job(models.Model):
     starting = models.CharField(max_length=80, verbose_name='Starting Date')
     latlng = models.CharField(max_length=50, verbose_name='Latitute,Longitude')
     location = models.CharField(max_length=50, verbose_name='Job Location', default='')
+    STATUS = ((1,'Pending'),(2,'Hidden'),(3,'Completed'))
+    status = models.PositiveSmallIntegerField(choices=STATUS,default=1,verbose_name='Job Status') 
 
     overview = models.TextField(blank=True,verbose_name='Job Overview')
     todo = models.TextField(blank=True,verbose_name='Job Responsibilities')
@@ -75,8 +77,10 @@ class Application(models.Model):
 
 class Work(models.Model):
     job = models.ForeignKey(Job,on_delete=models.CASCADE,related_name='work_job')
+    seeker = models.ForeignKey(SeekerProfile,on_delete=models.CASCADE,related_name='work_seeker')
     created = models.DateTimeField(auto_now_add=True)
-
+    STATUS = ((1,'Accept'),(2,'Prepare'),(3,'Complete'),(4,'Review'),(5,'Done'))
+    status = models.PositiveSmallIntegerField(choices=STATUS,default=1,verbose_name='Work Status')
 
     class Meta:
         ordering = ['-created',]    

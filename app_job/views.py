@@ -54,8 +54,7 @@ class CompanyViewSet(ModelViewSet):
         return CompanySerializer
 
 class ApplicationViewSet(ModelViewSet):
-    permission_classes = []
-    # serializer_class = ApplicationSerializer
+    permission_classes = [IsAuthenticated,]
 
     def get_queryset(self):
         queryset = Application.objects.all()

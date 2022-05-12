@@ -50,7 +50,7 @@ class ApplicationViewSerializer(ModelSerializer):
     seeker = SeekerSerializer()
     class Meta:
         model = Application
-        fields = ('message','status','seeker')
+        fields = ('id','message','status','seeker')
 
 
 class CombinedSerializer(Serializer):

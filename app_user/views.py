@@ -1,11 +1,15 @@
-from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView
-from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticated
 from app_auth.models import User
-from .models import SeekerProfile,RecruiterProfile
-from .serializers import SeekerProfileSerializer,RecruiterProfileSerializer,PublicRecruiterProfileSerializer,PublicSeekerProfileSerializer,AvailableSeekerSerializer
+from rest_framework.generics import ListAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
+
+from .models import RecruiterProfile, SeekerProfile
+from .serializers import (AvailableSeekerSerializer,
+                          PublicRecruiterProfileSerializer,
+                          PublicSeekerProfileSerializer,
+                          RecruiterProfileSerializer, SeekerProfileSerializer)
 
 
 class SeekerProfileViewSet(ModelViewSet):
@@ -51,5 +55,5 @@ class PublicProfileView(APIView):
 
 class AvailableSeekerView(ListAPIView):
     permission_classes = []
-    queryset = SeekerProfile.objects.all()
+    queryset = SeekerProfile.objects.filter(status=1)
     serializer_class = AvailableSeekerSerializer

@@ -19,7 +19,7 @@ class AvailableSeekerSerializer(ModelSerializer):
     user = UserSerial()
     class Meta:
         model = SeekerProfile
-        fields = ('picture','bio','expertise','user')
+        fields = ('picture','bio','expertise','user','status')
 
 
 class RecruiterProfileSerializer(ModelSerializer):

@@ -24,7 +24,7 @@ class SeekerProfile(models.Model):
     expertise = models.CharField(max_length=50,blank=True)
     address = models.CharField(max_length=150,blank=True)
     STATUS = ((1,'Free'),(2,'Busy'))
-    status = models.PositiveSmallIntegerField(choices=STATUS,default=2)
+    status = models.PositiveSmallIntegerField(choices=STATUS,default=1)
     occupation = models.CharField(max_length=50, blank=True)
     def __str__(self):
         return self.user.first_name+ ' Seeker'

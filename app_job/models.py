@@ -56,7 +56,7 @@ class Job(models.Model):
         super(Job, self).save(*args, **kwargs)
     
     def __str__(self):
-        return self.title
+        return self.title+' by '+self.company.name+','+self.company.location
 
 class Application(models.Model):
     job = models.ForeignKey(Job,on_delete=models.CASCADE,related_name='job')
@@ -70,7 +70,7 @@ class Application(models.Model):
     class Meta:
         ordering = ['-applied',]    
     def __str__(self):
-        return self.seeker.user.first_name+"'s Application"
+        return self.seeker.user.first_name+"'s Application for "+self.job.title
 
 
 class Work(models.Model):

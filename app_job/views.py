@@ -8,7 +8,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import ListAPIView,CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
-from .serializers import CombinedSerializer,JobSerializer,JobTypeSerializer,CompanySerializer,ApplicationSerializer, AllJobSerializer, JobInfoSerializer, CompanyViewSerializer
+from .serializers import CombinedSerializer,JobSerializer,JobTypeSerializer,CompanySerializer,ApplicationSerializer, AllJobSerializer, JobInfoSerializer, CompanyViewSerializer, ApplicationViewSerializer
 
 class CustomPageNumberPagination(PageNumberPagination):
     page_size = 8
@@ -55,7 +55,7 @@ class CompanyViewSet(ModelViewSet):
 
 class ApplicationViewSet(ModelViewSet):
     permission_classes = []
-    serializer_class = ApplicationSerializer
+    # serializer_class = ApplicationSerializer
 
     def get_queryset(self):
         queryset = Application.objects.all()
@@ -63,6 +63,12 @@ class ApplicationViewSet(ModelViewSet):
         if id is not None:
             queryset = queryset.filter(job_id=id)
         return queryset
+    
+    def get_serializer_class(self):
+        id = self.request.query_params.get('id',None)
+        if id is not None:
+            return ApplicationViewSerializer
+        return ApplicationSerializer
 
 class JobViewSet(ModelViewSet):
     permission_classes = []

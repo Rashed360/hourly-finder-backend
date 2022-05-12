@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer,Serializer
 from app_auth.models import User
-from app_user.models import RecruiterProfile
+from app_user.models import RecruiterProfile, SeekerProfile
 from .models import Job,JobType,Company,Application
 
 
@@ -36,6 +36,21 @@ class ApplicationSerializer(ModelSerializer):
     class Meta:
         model = Application
         fields = "__all__"
+
+class ApplicationViewSerializer(ModelSerializer):
+    class SeekerSerializer(ModelSerializer):
+        class UserSerial(ModelSerializer):
+            class Meta:
+                model = User
+                fields = ('username','first_name','last_name')
+        user = UserSerial()
+        class Meta:
+            model = SeekerProfile
+            fields = ('picture','expertise','user')
+    seeker = SeekerSerializer()
+    class Meta:
+        model = Application
+        fields = ('message','status','seeker')
 
 
 class CombinedSerializer(Serializer):

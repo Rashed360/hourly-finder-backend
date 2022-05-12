@@ -78,6 +78,7 @@ class Application(models.Model):
 class Work(models.Model):
     job = models.ForeignKey(Job,on_delete=models.CASCADE,related_name='work_job')
     seeker = models.ForeignKey(SeekerProfile,on_delete=models.CASCADE,related_name='work_seeker')
+    recruiter = models.ForeignKey(RecruiterProfile,on_delete=models.CASCADE,related_name='work_recruiter')
     created = models.DateTimeField(auto_now_add=True)
     STATUS = ((1,'Accept'),(2,'Prepare'),(3,'Complete'),(4,'Review'),(5,'Done'))
     status = models.PositiveSmallIntegerField(choices=STATUS,default=1,verbose_name='Work Status')
@@ -85,4 +86,4 @@ class Work(models.Model):
     class Meta:
         ordering = ['-created',]    
     def __str__(self):
-        return self.job+" as Work"
+        return self.job.title+" - Work"

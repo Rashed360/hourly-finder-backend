@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer,Serializer
 from app_auth.models import User
 from app_user.models import RecruiterProfile, SeekerProfile
-from .models import Job,JobType,Company,Application
+from .models import Job,JobType,Company,Application, Work
 
 
 class JobTypeSerializer(ModelSerializer):
@@ -21,6 +21,26 @@ class CompanyViewSerializer(ModelSerializer):
         exclude = ('id','recruiter')
 
 
+class WorkSerializer(ModelSerializer):
+    class JobSerial(ModelSerializer):
+        class Meta:
+            model = Job
+            fields = ('title','location','type')
+    class SeekerSerializer(ModelSerializer):
+        class UserSerial(ModelSerializer):
+            class Meta:
+                model = User
+                fields = ('username','first_name','last_name')
+        user = UserSerial()
+        class Meta:
+            model = SeekerProfile
+            fields = ('picture','expertise','user')
+    job = JobSerial()
+    seeker = SeekerSerializer()
+    class Meta:
+        model = Work
+        fields = "__all__"
+
 class JobSerializer(ModelSerializer):
     class Meta:
         model = Job
@@ -29,7 +49,7 @@ class JobSerializer(ModelSerializer):
 class JobInfoSerializer(ModelSerializer):
     class Meta:
         model = Job
-        fields = ('title','starting','type','slug','location')
+        fields = ('title','starting','type','slug','location','status')
 
 
 class ApplicationSerializer(ModelSerializer):

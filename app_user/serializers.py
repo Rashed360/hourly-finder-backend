@@ -1,8 +1,10 @@
 from dataclasses import fields
+
 from app_auth.models import User
-from .models import RecruiterProfile
-from rest_framework.serializers import Serializer,ModelSerializer
-from .models import SeekerProfile, RecruiterProfile
+from rest_framework.serializers import ModelSerializer, Serializer
+
+from .models import RecruiterProfile, SeekerProfile
+
 
 class SeekerProfileSerializer(ModelSerializer):
     class Meta:
@@ -30,7 +32,7 @@ class PublicRecruiterProfileSerializer(Serializer):
     class RecruiterProfileSerial(ModelSerializer):
         class Meta:
             model = RecruiterProfile
-            fields = ('bio','phone','picture','address')
+            fields = ('bio','phone','picture','address','designation')
     class UserSerial(ModelSerializer):
         class Meta:
             model = User
@@ -44,7 +46,7 @@ class PublicSeekerProfileSerializer(Serializer):
     class SeekerProfileSerial(ModelSerializer):
         class Meta:
             model = SeekerProfile
-            fields = ('bio','phone','picture','address')
+            fields = ('bio','phone','picture','address','expertise','status', 'occupation')
     class UserSerial(ModelSerializer):
         class Meta:
             model = User

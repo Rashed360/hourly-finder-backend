@@ -1,5 +1,5 @@
-from django.db import models
 from app_auth.models import User
+from django.db import models
 
 
 class RecruiterProfile(models.Model):
@@ -23,6 +23,9 @@ class SeekerProfile(models.Model):
     bio = models.TextField()
     expertise = models.CharField(max_length=50,blank=True)
     address = models.CharField(max_length=150,blank=True)
+    STATUS = ((1,'Free'),(2,'Busy'))
+    status = models.PositiveSmallIntegerField(choices=STATUS,default=2)
+    occupation = models.CharField(max_length=50, blank=True)
     def __str__(self):
         return self.user.first_name+ ' Seeker'
 

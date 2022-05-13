@@ -46,7 +46,7 @@ class PublicSeekerProfileSerializer(Serializer):
     class SeekerProfileSerial(ModelSerializer):
         class Meta:
             model = SeekerProfile
-            fields = ('bio','phone','picture','address','expertise','status', 'occupation')
+            fields = ('id','bio','phone','picture','address','expertise','status', 'occupation')
     class UserSerial(ModelSerializer):
         class Meta:
             model = User

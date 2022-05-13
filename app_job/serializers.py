@@ -81,6 +81,16 @@ class ApplicationViewSerializer(ModelSerializer):
         model = Application
         fields = ('id','message','status','seeker')
 
+class ApplicationSeekerViewSerializer(ModelSerializer):
+    class JobSerializer(ModelSerializer):
+        class Meta:
+            model = Job
+            fields = ('title','location','type')
+    job = JobSerializer()
+    class Meta:
+        model = Application
+        fields = ('id','status','job')
+
 
 class CombinedSerializer(Serializer):
     class JobSerial(ModelSerializer):

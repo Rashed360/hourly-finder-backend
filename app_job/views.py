@@ -3,17 +3,28 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from app_auth.models import User
 from app_user.models import RecruiterProfile
-from .models import Job,JobType,Company,Application, Work
+from .models import Job,JobType,Company,Application, Offer, Work
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import ListAPIView,CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
-from .serializers import CombinedSerializer,JobSerializer,JobTypeSerializer,CompanySerializer,ApplicationSerializer, AllJobSerializer, JobInfoSerializer, CompanyViewSerializer, ApplicationViewSerializer, WorkSerializer,WorkViewSerializer
+from .serializers import CombinedSerializer,JobSerializer,JobTypeSerializer,CompanySerializer,ApplicationSerializer, AllJobSerializer, JobInfoSerializer, CompanyViewSerializer, ApplicationViewSerializer, OfferSerializer, WorkSerializer,WorkViewSerializer
 
 class CustomPageNumberPagination(PageNumberPagination):
     page_size = 8
     page_size_query_param = 'page_size'
     max_page_size = 12
+
+class OfferViewSet(ModelViewSet):
+    permission_classes = []
+    serializer_class = OfferSerializer
+
+    def get_queryset(self):
+        queryset = Offer.objects.all()
+        id = self.request.query_params.get('id',None)
+        if id is not None:
+            queryset = queryset.filter(seeker=id)
+        return queryset
 
 class WorkViewSet(ModelViewSet):
     permission_classes = []

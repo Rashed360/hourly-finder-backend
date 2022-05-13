@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer,Serializer
 from app_auth.models import User
 from app_user.models import RecruiterProfile, SeekerProfile
-from .models import Job,JobType,Company,Application, Work
+from .models import Job,JobType,Company,Application, Offer, Work
 
 
 class JobTypeSerializer(ModelSerializer):
@@ -19,6 +19,11 @@ class CompanyViewSerializer(ModelSerializer):
     class Meta:
         model = Company
         exclude = ('id','recruiter')
+
+class OfferSerializer(ModelSerializer):
+    class Meta:
+        model = Offer
+        fields = "__all__"
 
 class WorkSerializer(ModelSerializer):
     class Meta:

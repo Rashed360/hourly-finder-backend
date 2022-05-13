@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import SingleJobAPIView,SingleJobCreateAPIView,JobListAPIView, JobTypeViewSet,CompanyViewSet,ApplicationViewSet,AllJobListAPIView,JobViewSet, WorkViewSet
+from .views import OfferViewSet, SingleJobAPIView,SingleJobCreateAPIView,JobListAPIView, JobTypeViewSet,CompanyViewSet,ApplicationViewSet,AllJobListAPIView,JobViewSet, WorkViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -8,6 +8,7 @@ router.register(r'type', JobTypeViewSet, basename='jobType')
 router.register(r'company', CompanyViewSet, basename='company')
 router.register(r'apply', ApplicationViewSet, basename='apply')
 router.register(r'work', WorkViewSet, basename='work')
+router.register(r'offer', OfferViewSet, basename='offer')
 
 urlpatterns = [
     path('', JobListAPIView.as_view()),

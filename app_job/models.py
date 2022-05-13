@@ -74,6 +74,23 @@ class Application(models.Model):
     def __str__(self):
         return self.seeker.user.first_name+"'s Application for "+self.job.title
 
+class Offer(models.Model):
+    recruiter = models.ForeignKey(RecruiterProfile,on_delete=models.CASCADE,related_name='offer_recruiter')
+    seeker = models.ForeignKey(SeekerProfile,on_delete=models.CASCADE,related_name='offer_seeker')
+    message = models.TextField(blank=True,verbose_name='message')
+    offered = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=150, verbose_name='Job Title')
+    location = models.CharField(max_length=50, verbose_name='Job Location', default='')
+    type = models.ForeignKey(JobType,on_delete=models.CASCADE,related_name='offer_job_type')
+    starting = models.CharField(max_length=80, verbose_name='Starting Date')
+    STATUS = ((1,'Pending'),(2,'Rejected'),(3,'Accepted'))
+    status = models.PositiveSmallIntegerField(choices=STATUS,default=1,verbose_name='status')
+    
+    class Meta:
+        ordering = ['-offered',]
+    def __str__(self):
+        return self.recruiter.user.first_name+" offered "+self.seeker.user.first_name
+
 
 class Work(models.Model):
     job = models.ForeignKey(Job,on_delete=models.CASCADE,related_name='work_job')

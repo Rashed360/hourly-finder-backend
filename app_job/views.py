@@ -30,6 +30,9 @@ class WorkViewSet(ModelViewSet):
         if id is not None:
             return WorkViewSerializer
         return WorkSerializer
+    
+    # def post(self):
+
 
 class JobListAPIView(ListAPIView):
     permission_classes = []

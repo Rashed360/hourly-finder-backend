@@ -101,7 +101,7 @@ class ApplicationViewSet(ModelViewSet):
         id = self.request.query_params.get('id',None)
         seeker = self.request.query_params.get('seeker',None)
         if id is not None:
-            queryset = queryset.filter(id=id)
+            queryset = queryset.filter(job=id)
         elif seeker is not None:
             queryset = queryset.filter(seeker=seeker)
         return queryset

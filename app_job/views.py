@@ -42,19 +42,6 @@ class WorkViewSet(ModelViewSet):
             return WorkViewSerializer
         return WorkSerializer
 
-# class WorkAPIView(APIView):
-#     permission_classes = []
-#     def post(self, request, job):
-#         vacant = Application.objects.filter(job=job,status=4)
-#         recruiter = RecruiterProfile.objects.get(id=job.recruiter.id)
-#         filters = {}
-#         filters['job'] = Job.objects.get(slug=slug)
-#         filters['recruiter'] = RecruiterProfile.objects.get(id=job.recruiter.id)
-#         filters['company'] = Company.objects.get(id=job.company.id)
-#         filters['user'] = User.objects.get(id=recruiter.user.id)
-#         serializer = CombinedSerializer(filters)
-#         return Response(serializer.data)
-
 class JobListAPIView(ListAPIView):
     permission_classes = []
     serializer_class = JobInfoSerializer
